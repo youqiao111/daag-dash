@@ -12,13 +12,16 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    @Select("select id,name,username,password,email,salt,available from sys_user where username = #{username}")
+    @Select("select id,name,username,password,email,salt,available from sys_user where username = #{username} or email = #{email}")
     @Results({
             @Result(id = true,column = "id",property = "id"),
             @Result(column = "id",property = "roleList",javaType = List.class,
                     many = @Many(select = "daag.dao.mapper.v1.SysRoleMapper.findByUserId"))
     })
-    User findByUsername(String username);
+    User findByUsername(@Param("username") String username, @Param("email") String email);
+
+    @Select("select id,name,username,password,email,salt,available from sys_user where id = #{id}")
+    User findById(Integer id);
 
     @Insert("insert into sys_user(name,username,password,email,salt,available) values(#{name},#{username},#{password},#{email},#{salt},#{available})")
     int insert(User user);
@@ -31,9 +34,9 @@ public interface UserMapper {
     })
     List<UserInfo> findAll();
 
-    @Update("update sys_user set name = #{name},password = #{password},email = #{email} where id = #{id}")
+    @Update("update sys_user set name = #{name},username = #{username},password = #{password},email = #{email} where id = #{id}")
     int update(User user);
 
     @Update("update sys_user set available = #{available} where id = #{id}")
-    int delete(@Param("id") Integer id,@Param("available") Boolean available);
+    int available(@Param("id") Integer id,@Param("available") Boolean available);
 }

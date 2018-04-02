@@ -3,6 +3,7 @@ package daag.web.api.v1.controller;
 import daag.model.v1.ResultJson;
 import daag.service.v1.UserService;
 import daag.web.api.v1.BaseController;
+import daag.web.api.v1.controller.user.UserController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;

@@ -9,7 +9,8 @@ public class ReqUser {
 	private Integer id;
 	private String name;					// 真实姓名
 	private String username;				// 用户名
-	private String plainPassword; 			// 登录时的密码，不持久化到数据库
+	private String plainpassword; 			// 登录时的密码，不持久化到数据库
+	private String newpassword;				// 新密码
 	private String email;					// 邮箱
 	private Boolean available;					// 用户状态
 
@@ -37,14 +38,21 @@ public class ReqUser {
 		this.username = username;
 	}
 
-	public String getPlainPassword() {
-		return plainPassword;
+	public String getPlainpassword() {
+		return plainpassword;
 	}
 
-	public void setPlainPassword(String plainPassword) {
-		this.plainPassword = plainPassword;
+	public void setPlainpassword(String plainpassword) {
+		this.plainpassword = plainpassword;
 	}
 
+	public String getNewpassword() {
+		return newpassword;
+	}
+
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
+	}
 
 	public String getEmail() {
 		return email;
@@ -61,4 +69,6 @@ public class ReqUser {
 	public void setAvailable(Boolean available) {
 		this.available = available;
 	}
+
+
 }

@@ -25,7 +25,7 @@ public class Utils {
 	 */
 	public static void entryptPassword(User user) {
 		String salt = UUID.randomUUID().toString();
-		String temPassword = user.getPlainPassword();
+		String temPassword = user.getPlainpassword();
 		Object md5Password = new SimpleHash(ALGORITHM_NAME, temPassword, ByteSource.Util.bytes(salt), HASH_ITERATIONS);
 		user.setSalt(salt);
 		user.setPassword(md5Password.toString());

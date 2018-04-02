@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface UserService {
 
-    User findByUsername(String username);
+    User findByUsername(String username,String email);
+
+    User findById(Integer id);
 
     int insert(User user);
 
@@ -15,6 +17,6 @@ public interface UserService {
 
     int update(User user);
 
-    int delete(Integer id,Boolean available);
+    int available(Integer id,Boolean available);
 
 }

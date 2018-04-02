@@ -19,9 +19,14 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User findByUsername(String username) {
-        User user = this.userMapper.findByUsername(username);
+    public User findByUsername(String username,String email) {
+        User user = this.userMapper.findByUsername(username,email);
         return user;
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return this.userMapper.findById(id);
     }
 
     @Override
@@ -40,8 +45,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int delete(Integer id, Boolean available) {
-        return this.userMapper.delete(id,available);
+    public int available(Integer id, Boolean available) {
+        return this.userMapper.available(id,available);
     }
 
 }

@@ -11,7 +11,7 @@ public class User {
 	private Integer id;						// 自增长主键
 	private String name;					// 真实姓名
 	private String username;				// 用户名
-	private String plainPassword; 			// 登录时的密码，不持久化到数据库
+	private String plainpassword; 			// 登录时的密码，不持久化到数据库
 	private String password;				// 加密后的密码
 	private String salt;					// 用于加密的盐
 	private String email;					// 邮箱
@@ -42,12 +42,12 @@ public class User {
 		this.username = username;
 	}
 
-	public String getPlainPassword() {
-		return plainPassword;
+	public String getPlainpassword() {
+		return plainpassword;
 	}
 
-	public void setPlainPassword(String plainPassword) {
-		this.plainPassword = plainPassword;
+	public void setPlainpassword(String plainpassword) {
+		this.plainpassword = plainpassword;
 	}
 
 	public String getPassword() {
