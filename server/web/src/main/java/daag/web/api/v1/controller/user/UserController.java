@@ -3,6 +3,7 @@ package daag.web.api.v1.controller.user;
 
 import daag.model.v1.User;
 import daag.model.v1.UserInfo;
+import daag.model.v1.request.AddUser;
 import daag.model.v1.request.ReqUser;
 import daag.service.v1.UserService;
 import daag.web.api.v1.BaseController;
@@ -38,34 +39,39 @@ public class UserController extends BaseController {
 
     /**
      * 注册接口
-     * @param reqUser
+     * @param addUser
      * @return
      */
     @ApiOperation (value = "用户注册")
     @PostMapping("/add")
     @RequiresRoles("admin")
-    public ResultJson user_add(ReqUser reqUser){
+    public ResultJson user_add(AddUser addUser){
         log.info("^^^^^^^^^^^^^^^^^^^^用户注册  begin");
         Integer status = -1;
         String msg = "";
         try {
-            User newUserInstance = this.userService.findByUsername(reqUser.getUsername(),reqUser.getEmail());
-            if (newUserInstance != null){
-                msg = "用户名或邮箱已注册";
-            }else {
-                User user = new User();
-                BeanUtils.copyProperties(reqUser,user);
-                Utils.entryptPassword(user);
-                if (this.userService.insert(user) == -1) {
-                    msg = "用户注册失败";
+            if (UserValidator.convert(addUser)) {
+                User newUserInstance = this.userService.findByUsername(addUser.getUsername(), addUser.getEmail());
+                if (newUserInstance != null) {
+                    msg = "用户名或邮箱已注册";
                 } else {
-                    log.info("^^^^^^^^^^^^^^^^^^^^注册成功  end");
-                    status = 0;
-                    msg = "用户注册成功";
+                    User user = new User();
+                    BeanUtils.copyProperties(addUser, user);
+                    Utils.entryptPassword(user);
+                    if (this.userService.insert(user) == -1) {
+                        msg = "用户注册失败";
+                    } else {
+                        log.info("^^^^^^^^^^^^^^^^^^^^注册成功  end");
+                        status = 0;
+                        msg = "用户注册成功";
+                    }
                 }
             }
             return resultJson(status,msg);
-        }catch (Exception e){
+        } catch (DaagException e) {
+            e.printStackTrace();
+            return resultJson(-1,"传入参数错误");
+        } catch (Exception e){
             e.printStackTrace();
             return resultJson(status,msg);
         }
