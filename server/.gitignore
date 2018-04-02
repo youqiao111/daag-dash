@@ -1,2 +1,10 @@
-build
-node_modules
+# Maven
+target/
+release.properties
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
