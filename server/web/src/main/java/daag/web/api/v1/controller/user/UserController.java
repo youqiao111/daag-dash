@@ -150,6 +150,7 @@ public class UserController extends BaseController {
                 } else {
                     User byId = this.userService.findById(user.getId());
                     user.setPassword(byId.getPassword());
+                    user.setSalt(byId.getSalt());
                 }
                 if (this.userService.update(user) > 0) {
                     if (!StringUtil.isEmpty(editUser.getRoles())){
