@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import "./index.less";
 import { Button } from 'react-bootstrap';
-//import bootstrap from "bootstrap/dist/css/bootstrap.css"
+import API from '../setting';
+import bootstrap from "bootstrap/dist/css/bootstrap.css"
+
 ReactDOM.render(
-  <Button>{HOST}</Button>
+  <Button href="/login.html">Login</Button>
   , $('#main')[0]);

@@ -6,18 +6,35 @@ const env = require('./env.js')[process.env.NODE_ENV];
 env['process.env.NODE_ENV'] = `"${process.env.NODE_ENV}"`;
 console.log('NODE_ENV:');
 console.log(env);
-/**
- * webpack entry list
- *  title : webpage title
- *  file :  entry file
- */
 const files = {};
-files['app'] = { title: 'title', file: ['index.jsx'] };
-files['app1'] = { title: 'title 1', file: ['index1.jsx'] };
+files['index'] = { title: 'Home', file: ['./page/index.jsx'] };
+files['login'] = { title: 'Login', file: ['./page/login.jsx'] };
+files['dashboard/index'] = { title: 'Dashboard', file: ['./page/dashboard/dashboard.jsx'] };
+
+files['user/index'] = { title: 'Users', file: ['./page/user/list.jsx'] };
+files['user/add'] = { title: 'Add User', file: ['./page/user/add.jsx'] };
+files['user/edit'] = { title: 'Edit User', file: ['./page/user/edit.jsx'] };
+files['user/info'] = { title: 'User Information', file: ['./page/user/info.jsx'] };
+
+files['source/index'] = { title: 'Sources', file: ['./page/source/list.jsx'] };
+files['source/add'] = { title: 'Add Source', file: ['./page/source/add.jsx'] };
+files['source/edit'] = { title: 'Edit Source', file: ['./page/source/edit.jsx'] };
+
+files['slice/index'] = { title: 'Slices', file: ['./page/slice/list.jsx'] };
+files['slice/add'] = { title: 'Add Slice', file: ['./page/slice/add.jsx'] };
+files['slice/edit'] = { title: 'Edit Slice', file: ['./page/slice/edit.jsx'] };
+files['slice/explorer'] = { title: 'Slice Explorer', file: ['./page/slice/explorer.jsx'] };
+
 //local webpackserver setting 
 module.exports.webpackserver = {
     host: "localhost",
     port: 2222,
+    proxypass: {
+        "/api/*": {
+            target: 'http://localhost:6660/',
+            secure: false
+        },
+    },
 };
 /* DO NOT modify */
 //to webpack format
@@ -26,7 +43,7 @@ const entry =
         vendor: ['react',
             'react-dom',
             'jquery',
-            //'bootstrap'    
+            //'bootstrap'
         ],
     };
 for (const key in files) {

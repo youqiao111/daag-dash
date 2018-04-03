@@ -1,13 +1,13 @@
 //setting
-//relicae by DefinePlugin(JSON.stringify)
+//replace by DefinePlugin(JSON.stringify)
 module.exports={};
 
 //development
 module.exports.development={
-     'HOST': JSON.stringify("localhost"),
+     'API_HOST': JSON.stringify(""),
 }
 
 //production
 module.exports.production={
-    'HOST': JSON.stringify("online"),
+    'API_HOST': JSON.stringify(""),
 }
