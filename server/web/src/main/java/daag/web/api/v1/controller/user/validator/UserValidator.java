@@ -35,7 +35,7 @@ public class UserValidator {
 
         if (StringUtil.isEmpty(addUser.getUsername()) || StringUtil.isEmpty(addUser.getName())
                 || StringUtil.isEmpty(addUser.getEmail()) || StringUtil.isEmpty(addUser.getPlainpassword())
-                || StringUtil.isEmpty(addUser.getRoles())){
+                || StringUtil.isEmpty(addUser.getReplainpassword()) || StringUtil.isEmpty(addUser.getRoles())){
             throw new DaagException(CodeMsg.UserParamErrMsg,CodeMsg.UserParamErrCode);
         }
         return true;

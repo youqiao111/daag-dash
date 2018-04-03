@@ -34,7 +34,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
     	log.info("^^^^^^^^^^^^^^^^^^^^  配置用户权限");
 		User userInfo = (User) principals.getPrimaryPrincipal();
-    	User user = userService.findByUsername(userInfo.getUsername(),null);
+    	User user = userService.findByUsername(0,userInfo.getUsername(),"");
     	if(null == user){
             return null;
         }
@@ -57,7 +57,7 @@ public class ShiroRealm extends AuthorizingRealm {
     	log.info("^^^^^^^^^^^^^^^^^^^^  认证用户身份信息");
 		String username = (String) token.getPrincipal(); // 获取用户登录账号
 		char[] plainpassword = (char[]) token.getCredentials();
-		User user = userService.findByUsername(username,null); // 通过账号查加密后的密码和盐，这里一般从缓存读取
+		User user = userService.findByUsername(0,username,""); // 通过账号查加密后的密码和盐，这里一般从缓存读取
         if(null == user){
             return null;
         }

@@ -9,6 +9,7 @@ public class AddUser {
 	private String name;					// 真实姓名
 	private String username;				// 用户名
 	private String plainpassword; 			// 登录时的密码，不持久化到数据库
+	private String replainpassword; 			// 重复密码
 	private String email;					// 邮箱
 	private String roles;				// 角色id
 	private Boolean available;				// 用户状态
@@ -35,6 +36,14 @@ public class AddUser {
 
 	public void setPlainpassword(String plainpassword) {
 		this.plainpassword = plainpassword;
+	}
+
+	public String getReplainpassword() {
+		return replainpassword;
+	}
+
+	public void setReplainpassword(String replainpassword) {
+		this.replainpassword = replainpassword;
 	}
 
 	public String getEmail() {

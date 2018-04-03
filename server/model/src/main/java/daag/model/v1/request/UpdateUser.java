@@ -11,7 +11,6 @@ public class UpdateUser {
 	private String newpassword;				// 新密码
 	private String renewpassword;				// 重复新密码
 	private String email;					// 邮箱
-	private Boolean available;					// 用户状态
 
 	public String getName() {
 		return name;
@@ -52,14 +51,5 @@ public class UpdateUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Boolean getAvailable() {
-		return available;
-	}
-
-	public void setAvailable(Boolean available) {
-		this.available = available;
-	}
-
 
 }

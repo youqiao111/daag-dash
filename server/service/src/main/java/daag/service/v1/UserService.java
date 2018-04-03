@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User findByUsername(String username,String email);
+    User findByUsername(Integer id,String username,String email);
 
     User findById(Integer id);
 

@@ -58,7 +58,10 @@ public class UserController extends BaseController {
         String msg = "";
         try {
             if (UserValidator.convert(addUser)) {
-                User newUserInstance = this.userService.findByUsername(addUser.getUsername(), addUser.getEmail());
+                if (!addUser.getPlainpassword().equals(addUser.getReplainpassword())){
+                    return resultJson(status,"两次密码输入不一致");
+                }
+                User newUserInstance = this.userService.findByUsername(0,addUser.getUsername(), addUser.getEmail());
                 if (newUserInstance != null) {
                     msg = "用户名或邮箱已注册";
                 } else {
@@ -81,7 +84,7 @@ public class UserController extends BaseController {
             return resultJson(status,msg);
         } catch (DaagException e) {
             e.printStackTrace();
-            return resultJson(-1,"传入参数错误");
+            return resultJson(-1,"传入参数异常");
         } catch (Exception e){
             e.printStackTrace();
             return resultJson(status,msg);
@@ -131,7 +134,7 @@ public class UserController extends BaseController {
         String msg = "";
         try {
             if(UserValidator.convert(editUser)) {
-                User byUsername = this.userService.findByUsername(editUser.getUsername(), editUser.getEmail());
+                User byUsername = this.userService.findByUsername(editUser.getId(),editUser.getUsername(), editUser.getEmail());
                 if (byUsername != null){
                     return resultJson(status, "用户名或邮箱已注册");
                 }
@@ -163,7 +166,7 @@ public class UserController extends BaseController {
             }
         } catch (DaagException e) {
             e.printStackTrace();
-            return resultJson(-1,"传入参数错误");
+            return resultJson(-1,"传入参数异常");
         }
         return resultJson(status,msg);
     }
@@ -183,9 +186,9 @@ public class UserController extends BaseController {
         if(sessionUser != null) {
             try {
                 if (UserValidator.convert(updateUser)) {
-                    User byUsername = this.userService.findByUsername(null, updateUser.getEmail());
+                    User byUsername = this.userService.findByUsername(sessionUser.getId(),"", updateUser.getEmail());
                     if (byUsername != null) {
-                        return resultJson(status, "用户名或邮箱已注册");
+                        return resultJson(status, "邮箱已注册");
                     }
                     User user = new User();
                     BeanUtils.copyProperties(updateUser, user);
@@ -214,7 +217,7 @@ public class UserController extends BaseController {
                 }
             } catch (DaagException e) {
                 e.printStackTrace();
-                return resultJson(-1, "传入参数错误");
+                return resultJson(-1, "传入参数异常");
             }
         }
         return resultJson(status,msg);
