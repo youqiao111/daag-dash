@@ -21,10 +21,16 @@ public interface UserMapper {
     User findByUsername(@Param("username") String username, @Param("email") String email);
 
     @Select("select id,name,username,password,email,salt,available from sys_user where id = #{id}")
+    @Results({
+            @Result(id = true,column = "id",property = "id"),
+            @Result(column = "id",property = "roleList",javaType = List.class,
+                    many = @Many(select = "daag.dao.mapper.v1.SysRoleMapper.findByUserId"))
+    })
     User findById(Integer id);
 
     @Insert("insert into sys_user(name,username,password,email,salt,available) values(#{name},#{username},#{password},#{email},#{salt},#{available})")
-    int insert(User user);
+    @Options(useGeneratedKeys = true)
+    int add(User user);
 
     @Select("select id,name,username,email,available from sys_user")
     @Results({
@@ -34,7 +40,7 @@ public interface UserMapper {
     })
     List<UserInfo> findAll();
 
-    @Update("update sys_user set name = #{name},username = #{username},password = #{password},email = #{email} where id = #{id}")
+    @Update("update sys_user set name = #{name},username = #{username},password = #{password},salt = #{salt},email = #{email} where id = #{id}")
     int update(User user);
 
     @Update("update sys_user set available = #{available} where id = #{id}")

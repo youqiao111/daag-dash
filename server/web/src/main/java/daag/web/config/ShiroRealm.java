@@ -32,14 +32,14 @@ public class ShiroRealm extends AuthorizingRealm {
 	 */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    	log.info("^^^^^^^^^^^^^^^^^^^^  配置当前用户权限");
-    	UserInfo userInfo = (UserInfo) principals.getPrimaryPrincipal();
-//    	User user = userService.findByUsername(account);
-    	if(null == userInfo){
+    	log.info("^^^^^^^^^^^^^^^^^^^^  配置用户权限");
+		User userInfo = (User) principals.getPrimaryPrincipal();
+    	User user = userService.findByUsername(userInfo.getUsername(),null);
+    	if(null == user){
             return null;
         }
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		for (SysRole role : userInfo.getRoleList()) {
+		for (SysRole role : user.getRoleList()) {
 			authorizationInfo.addRole(role.getName());	// 添加角色
 			for (SysPermission permission : role.getPermissionList()) {
 				authorizationInfo.addStringPermission(permission.getPermission());	// 添加具体权限
@@ -56,14 +56,14 @@ public class ShiroRealm extends AuthorizingRealm {
             throws AuthenticationException {
     	log.info("^^^^^^^^^^^^^^^^^^^^  认证用户身份信息");
 		String username = (String) token.getPrincipal(); // 获取用户登录账号
+		char[] plainpassword = (char[]) token.getCredentials();
 		User user = userService.findByUsername(username,null); // 通过账号查加密后的密码和盐，这里一般从缓存读取
         if(null == user){
             return null;
         }
+		user.setPlainpassword(String.valueOf(plainpassword));
 		// 1). principal: 认证的实体信息. 可以是 username, 也可以是数据表对应的用户的实体类对象.
-		UserInfo userInfo = new UserInfo();
-		BeanUtils.copyProperties(user,userInfo);
-		Object principal = userInfo;
+		Object principal = user;
 		// 2). credentials: 加密后的密码. 
 		Object credentials = user.getPassword();
 		// 3). realmName: 当前 realm 对象的唯一名字. 调用父类的 getName() 方法

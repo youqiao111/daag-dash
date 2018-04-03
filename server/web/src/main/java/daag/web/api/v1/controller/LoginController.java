@@ -1,6 +1,8 @@
 package daag.web.api.v1.controller;
 
 import daag.model.v1.ResultJson;
+import daag.model.v1.User;
+import daag.model.v1.UserInfo;
 import daag.service.v1.UserService;
 import daag.web.api.v1.BaseController;
 import daag.web.api.v1.controller.user.UserController;
@@ -41,14 +43,18 @@ public class LoginController extends BaseController {
     @PostMapping("/login")
     public ResultJson login(String username, String password){
         log.info("^^^^^^^^^^^^^^^^^^^^用户登录  begin");
-        Object principal = SecurityUtils.getSubject().getPrincipal();
-        if(principal != null){
-            return resultJson(0,"已登录");
-        }
         Integer status = -1;
         String msg = "";
         try {
             Subject currentUser = SecurityUtils.getSubject();
+            User user = (User) currentUser.getPrincipal();
+            if (user != null) {
+                if (!user.getUsername().equals(username)){
+                    currentUser.logout();
+                }else {
+                    return resultJson(0, "已登录");
+                }
+            }
             if (!currentUser.isAuthenticated()){
                 UsernamePasswordToken token = new UsernamePasswordToken(username,password);
                 try {

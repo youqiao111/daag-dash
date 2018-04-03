@@ -4,14 +4,24 @@ package daag.model.v1.request;
  * 用户实体类
  * Created by yq on 2018/3/20.
  */
-public class AddUser {
+public class EditUser {
 
+	private Integer id;
 	private String name;					// 真实姓名
 	private String username;				// 用户名
-	private String plainpassword; 			// 登录时的密码，不持久化到数据库
+	private String newpassword;				// 新密码
+	private String renewpassword;				// 重复新密码
 	private String email;					// 邮箱
 	private String roles;				// 角色id
-	private Boolean available;				// 用户状态
+	private Boolean available;					// 用户状态
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -29,12 +39,20 @@ public class AddUser {
 		this.username = username;
 	}
 
-	public String getPlainpassword() {
-		return plainpassword;
+	public String getNewpassword() {
+		return newpassword;
 	}
 
-	public void setPlainpassword(String plainpassword) {
-		this.plainpassword = plainpassword;
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
+	}
+
+	public String getRenewpassword() {
+		return renewpassword;
+	}
+
+	public void setRenewpassword(String renewpassword) {
+		this.renewpassword = renewpassword;
 	}
 
 	public String getEmail() {

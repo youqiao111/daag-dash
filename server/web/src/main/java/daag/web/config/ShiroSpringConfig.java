@@ -52,7 +52,7 @@ public class ShiroSpringConfig {
 		filterChainDefinitionMap.put("/webjars/**", "anon");	// Swagger
 		filterChainDefinitionMap.put("/swagger-resources/**", "anon");	// Swagger
 		filterChainDefinitionMap.put("/v2/api-docs", "anon");	// Swagger
-		filterChainDefinitionMap.put("/api/v1/user/register", "anon");// 注册访问
+//		filterChainDefinitionMap.put("/api/v1/user/add", "anon");// 注册访问
 		filterChainDefinitionMap.put("/api/v1/login", "anon");// 登录匿名访问
 		filterChainDefinitionMap.put("/api/v1/test", "anon");// 测试
 //		filterChainDefinitionMap.put("/api/v1/logout", "logout");	// 用户退出，只需配置logout即可实现该功能

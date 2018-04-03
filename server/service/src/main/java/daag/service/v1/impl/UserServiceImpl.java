@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int insert(User user) {
-        return this.userMapper.insert(user);
+    public int add(User user) {
+        return this.userMapper.add(user);
     }
 
     @Override

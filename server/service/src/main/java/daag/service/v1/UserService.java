@@ -11,7 +11,7 @@ public interface UserService {
 
     User findById(Integer id);
 
-    int insert(User user);
+    int add(User user);
 
     List<UserInfo> findAll();
 
