@@ -140,14 +140,14 @@ public class UserController extends BaseController {
                 }
                 User user = new User();
                 BeanUtils.copyProperties(editUser, user);
-                if (!StringUtil.isEmpty(editUser.getNewpassword())) {
+                if (!StringUtil.isEmpty(editUser.getNewpassword())) {//修改密码
                     if(editUser.getNewpassword().equals(editUser.getRenewpassword())) {
                         user.setPlainpassword(editUser.getNewpassword());
                         Utils.entryptPassword(user);
                     }else {
                         resultJson(status,"两次密码输入不一致");
                     }
-                } else {
+                } else {//不修改密码
                     User byId = this.userService.findById(user.getId());
                     user.setPassword(byId.getPassword());
                     user.setSalt(byId.getSalt());
@@ -199,17 +199,17 @@ public class UserController extends BaseController {
                     if(!sessionUser.getPlainpassword().equals(user.getPlainpassword())){ //判断输入原密码是否正确
                         return resultJson(status,"原密码输入错误");
                     }
-                    if (!StringUtil.isEmpty(updateUser.getNewpassword())) {
+                    if (!StringUtil.isEmpty(updateUser.getNewpassword())) {//修改密码
                         if (updateUser.getNewpassword().equals(updateUser.getRenewpassword())) {
                             user.setPlainpassword(updateUser.getNewpassword());
                             Utils.entryptPassword(user);
                         }else {
                             resultJson(status,"两次密码输入不一致");
                         }
-                    } else {
+                    } else {//不修改密码
                         user.setPassword(sessionUser.getPassword());
+                        user.setSalt(sessionUser.getSalt());
                     }
-                    Utils.entryptPassword(user);
                     if (this.userService.update(user) > 0) {
                         status = 0;
                         msg = "修改成功";
