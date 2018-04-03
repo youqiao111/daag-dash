@@ -140,8 +140,6 @@ public class UserController extends BaseController {
                 }
                 User user = new User();
                 BeanUtils.copyProperties(editUser, user);
-                User byId = this.userService.findById(user.getId());
-                user.setAvailable(byId.getAvailable());
                 if (!StringUtil.isEmpty(editUser.getNewpassword())) {
                     if(editUser.getNewpassword().equals(editUser.getRenewpassword())) {
                         user.setPlainpassword(editUser.getNewpassword());
@@ -150,6 +148,7 @@ public class UserController extends BaseController {
                         resultJson(status,"两次密码输入不一致");
                     }
                 } else {
+                    User byId = this.userService.findById(user.getId());
                     user.setPassword(byId.getPassword());
                 }
                 if (this.userService.update(user) > 0) {
@@ -195,6 +194,7 @@ public class UserController extends BaseController {
                     BeanUtils.copyProperties(updateUser, user);
                     user.setId(sessionUser.getId());
                     user.setUsername(sessionUser.getUsername());
+                    user.setAvailable(sessionUser.getAvailable());
                     if(!sessionUser.getPlainpassword().equals(user.getPlainpassword())){ //判断输入原密码是否正确
                         return resultJson(status,"原密码输入错误");
                     }
