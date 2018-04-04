@@ -3,7 +3,7 @@ package daag.web.api.v1;
 import javax.servlet.http.HttpServletRequest;
 
 import daag.model.v1.ResultJson;
-import daag.model.v1.UserInfo;
+import daag.model.v1.user.Vo.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;

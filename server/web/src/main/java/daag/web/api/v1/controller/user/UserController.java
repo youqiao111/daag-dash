@@ -1,14 +1,14 @@
 package daag.web.api.v1.controller.user;
 
 
-import daag.model.v1.User;
-import daag.model.v1.UserInfo;
-import daag.model.v1.request.AddUser;
-import daag.model.v1.request.DetailUser;
-import daag.model.v1.request.EditUser;
-import daag.model.v1.request.UpdateUser;
-import daag.service.v1.SysRoleService;
-import daag.service.v1.UserService;
+import daag.model.v1.user.User;
+import daag.model.v1.user.Vo.UserInfo;
+import daag.model.v1.user.Vo.AddUser;
+import daag.model.v1.user.Vo.DetailUser;
+import daag.model.v1.user.Vo.EditUser;
+import daag.model.v1.user.Vo.UpdateUser;
+import daag.service.v1.user.SysRoleService;
+import daag.service.v1.user.UserService;
 import daag.web.api.v1.BaseController;
 import daag.web.api.v1.controller.user.validator.UserValidator;
 import daag.web.utils.StringUtil;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Created by yq on 2018/3/14.
  */
-@Api(tags = "用户相关")
+@Api(tags = "User相关")
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController extends BaseController {
@@ -68,10 +68,10 @@ public class UserController extends BaseController {
                     User user = new User();
                     BeanUtils.copyProperties(addUser, user);
                     Utils.entryptPassword(user);
-                    if (this.userService.add(user) == -1) {
+                    if (this.userService.add(user) > 0) {
                         msg = "用户添加失败";
                     } else {
-                        log.info("^^^^^^^^^^^^^^^^^^^^添加成功  end");
+                        log.info("^^^^^^^^^^^^^^^^^^^^用户添加成功  end");
                         if (!StringUtil.isEmpty(addUser.getRoles())){
                             // 分配角色
                             this.sysRoleService.addAll(user.getId(),addUser.getRoles());
@@ -81,14 +81,11 @@ public class UserController extends BaseController {
                     }
                 }
             }
-            return resultJson(status,msg);
         } catch (DaagException e) {
             e.printStackTrace();
-            return resultJson(-1,"传入参数异常");
-        } catch (Exception e){
-            e.printStackTrace();
-            return resultJson(status,msg);
+            msg = "传入参数异常";
         }
+        return resultJson(status,msg);
     }
 
     @ApiOperation (value = "用户列表")
@@ -112,13 +109,12 @@ public class UserController extends BaseController {
         Integer status = -1;
         String msg = "";
         User byId = this.userService.findById(id);
+        DetailUser user = new DetailUser();
         if (byId != null){
-            DetailUser user = new DetailUser();
             BeanUtils.copyProperties(byId,user);
             status = 0;
-            return resultJson(status,msg,user);
         }
-        return resultJson(status,msg);
+        return resultJson(status,msg,user);
     }
 
     /**
@@ -152,7 +148,7 @@ public class UserController extends BaseController {
                     user.setPassword(byId.getPassword());
                     user.setSalt(byId.getSalt());
                 }
-                if (this.userService.update(user) > 0) {
+                if (this.userService.update(user) >= 0) {
                     if (!StringUtil.isEmpty(editUser.getRoles())){
                         // 清空原角色
                         this.sysRoleService.deleteByUserId(user.getId());
@@ -167,7 +163,7 @@ public class UserController extends BaseController {
             }
         } catch (DaagException e) {
             e.printStackTrace();
-            return resultJson(-1,"传入参数异常");
+            msg = "传入参数异常";
         }
         return resultJson(status,msg);
     }
@@ -210,7 +206,7 @@ public class UserController extends BaseController {
                         user.setPassword(sessionUser.getPassword());
                         user.setSalt(sessionUser.getSalt());
                     }
-                    if (this.userService.update(user) > 0) {
+                    if (this.userService.update(user) >= 0) {
                         status = 0;
                         msg = "修改成功";
                     } else {
@@ -219,7 +215,7 @@ public class UserController extends BaseController {
                 }
             } catch (DaagException e) {
                 e.printStackTrace();
-                return resultJson(-1, "传入参数异常");
+                msg = "传入参数异常";
             }
         }
         return resultJson(status,msg);

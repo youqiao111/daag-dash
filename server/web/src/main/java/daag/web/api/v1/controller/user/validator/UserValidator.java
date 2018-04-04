@@ -1,8 +1,8 @@
 package daag.web.api.v1.controller.user.validator;
 
-import daag.model.v1.request.AddUser;
-import daag.model.v1.request.EditUser;
-import daag.model.v1.request.UpdateUser;
+import daag.model.v1.user.Vo.AddUser;
+import daag.model.v1.user.Vo.EditUser;
+import daag.model.v1.user.Vo.UpdateUser;
 import daag.web.utils.StringUtil;
 import daag.web.utils.exception.CodeMsg;
 import daag.web.utils.exception.DaagException;

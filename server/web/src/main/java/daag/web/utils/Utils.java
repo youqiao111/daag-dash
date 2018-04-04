@@ -1,6 +1,6 @@
 package daag.web.utils;
 
-import daag.model.v1.User;
+import daag.model.v1.user.User;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 

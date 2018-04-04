@@ -1,9 +1,8 @@
 package daag.web.api.v1.controller;
 
 import daag.model.v1.ResultJson;
-import daag.model.v1.User;
-import daag.model.v1.UserInfo;
-import daag.service.v1.UserService;
+import daag.model.v1.user.User;
+import daag.service.v1.user.UserService;
 import daag.web.api.v1.BaseController;
 import daag.web.api.v1.controller.user.UserController;
 import io.swagger.annotations.Api;

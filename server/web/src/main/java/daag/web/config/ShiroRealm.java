@@ -1,10 +1,9 @@
 package daag.web.config;
 
-import daag.model.v1.SysPermission;
-import daag.model.v1.SysRole;
-import daag.model.v1.User;
-import daag.model.v1.UserInfo;
-import daag.service.v1.UserService;
+import daag.model.v1.user.SysPermission;
+import daag.model.v1.user.SysRole;
+import daag.model.v1.user.User;
+import daag.service.v1.user.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -13,7 +12,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
