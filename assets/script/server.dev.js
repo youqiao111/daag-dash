@@ -1,4 +1,4 @@
-const path=require('path');
+const path = require('path');
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const config = require('../config/webpack.config.dev.js')
@@ -21,11 +21,12 @@ new WebpackDevServer(webpack(config), {
     },
     setup(app) {
         app.use(errorOverlayMiddleware())
-        if (process.env.NODE_ENV !== 'production') {
-            app.use('/api/*', proxy({
-                target: '', //test data url
-                secure: false
-            }))
+        if (process.env.NODE_ENV !== 'production' && webpackServerConfig.proxypass) {
+            for (const key in webpackServerConfig.proxypass) {
+                const element = webpackServerConfig.proxypass[key];
+                app.use(key, proxy(element));
+            }
+
         }
     }
 }).listen(webpackServerConfig.port, webpackServerConfig.host, function (err) {
