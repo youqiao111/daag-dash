@@ -2,6 +2,7 @@ package daag.dao.mapper.v1.datasource;
 
 import daag.model.v1.datasource.DataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
+import daag.model.v1.datasource.Vo.ListDataSource;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public interface DataSourceMapper {
     @Select("select id,name,url,other,user_id,type,createtime,updatetime from content_datasource where id = #{id}")
     DataSource findById(Integer id);
 
-    @Select("select id,name,url,other,user_id,type,createtime,updatetime from content_datasource")
-    List<DataSource> findAll();
+    @Select("select a.*,b.username from content_datasource a,sys_user b where a.user_id = b.id")
+    List<ListDataSource> findAll();
 
     @Insert("insert into content_datasource(name,url,other,user_id,type,createtime) values(#{name},#{url},#{other},#{user_id},#{type},#{createtime})")
     @Options(useGeneratedKeys = true)

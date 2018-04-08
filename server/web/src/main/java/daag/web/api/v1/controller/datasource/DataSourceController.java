@@ -4,6 +4,7 @@ import daag.model.v1.ResultJson;
 import daag.model.v1.datasource.DataSource;
 import daag.model.v1.datasource.Vo.AddDataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
+import daag.model.v1.datasource.Vo.ListDataSource;
 import daag.model.v1.slice.Slice;
 import daag.model.v1.user.User;
 import daag.service.v1.datasource.DataSourceService;
@@ -83,7 +84,7 @@ public class DataSourceController extends BaseController {
     public ResultJson datasource_list(){
         Integer status = -1;
         String msg = "";
-        List<DataSource> dataSourceList = this.dataSourceService.findAll();
+        List<ListDataSource> dataSourceList = this.dataSourceService.findAll();
         if (dataSourceList.size() > 0){
             status = 0;
         }else {

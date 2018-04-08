@@ -2,6 +2,7 @@ package daag.service.v1.datasource;
 
 import daag.model.v1.datasource.DataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
+import daag.model.v1.datasource.Vo.ListDataSource;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface DataSourceService {
 
     DataSource findById(Integer id);
 
-    List<DataSource> findAll();
+    List<ListDataSource> findAll();
 
     int add(DataSource dataSource);
 
