@@ -9,7 +9,7 @@ public class ListDataSource {
 
     private Integer id;             // 主键id
     private Integer user_id;        // 创建人id
-    private Integer username;        // 创建人id
+    private String username;        // 创建人id
     private String name;            // 名称
     private String url;             // jdbc链接
     private String other;           // 其他
@@ -33,11 +33,11 @@ public class ListDataSource {
         this.user_id = user_id;
     }
 
-    public Integer getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(Integer username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
