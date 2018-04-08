@@ -18,10 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -82,7 +79,7 @@ public class DataSourceController extends BaseController {
      * @return
      */
     @ApiOperation(value = "DataSource列表查询")
-    @PostMapping("/list")
+    @GetMapping("/list")
     public ResultJson datasource_list(){
         Integer status = -1;
         String msg = "";
@@ -102,7 +99,7 @@ public class DataSourceController extends BaseController {
      */
     @ApiOperation(value = "DataSource详情")
     @GetMapping("/detail/{id}")
-    public ResultJson datasource_detail(Integer id){
+    public ResultJson datasource_detail(@PathVariable("id") Integer id){
         Integer status = -1;
         String msg = "";
         DataSource dataSource = this.dataSourceService.findById(id);
