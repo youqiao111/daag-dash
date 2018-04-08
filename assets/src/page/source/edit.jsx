@@ -8,20 +8,87 @@ import { observer, inject } from "mobx-react";
 import { observable, action, useStrict, runInAction } from "mobx";
 import API from '../../setting';
 import * as _ from 'lodash';
+import utils from '../../utils';
 
-
-
+@inject("user")
+@observer
 class EditSource extends React.Component {
+    @observable sourceinfo = null;
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    async componentWillMount() {
+        try {
+            const req = {
+                url: API.datasource.detail + `/${utils.getParameter("id")}/`,
+                method: "GET",
+                dataType: "json",
+            };
+            //console.log(req);
+            const result = await $.ajax(req);
+            if (result && result.status == 0) {
+                this.sourceinfo = result.data;
+            } else {
+                alert(result.msg ? result.msg : " Server Error");
+            }
+            //console.log(this.sourceinfo);
+        }
+        catch (exp) {
+            console.log(exp);
+            alert("Fate Error!!");
+        }
 
+    }
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        const act = event.target.action;
+        const method = event.target.method;
+        const name = $("#name").val();
+        const connstr = $("#connstr").val();
+        const type = $("#type").val();
+        if (name.length < 1 || connstr.length < 1) {
+            alert("name or connectionstring must not blank");
+            return;
+        }
+        const req = {
+            url: act,
+            method: method,
+            dataType: "json",
+            data: {
+                id:this.sourceinfo.id,
+                name: name,
+                url: connstr,
+                type: type,
+                other:"{}",
+            },
+        };
+        try {
+            const result = await $.ajax(req);
+            if (result && result.status == 0) {
+                alert("update successful！");
+                window.location.href="/source/";
+            }
+            else {
+                alert(result.msg ? result.msg : " Server Error");
+            }
+        }
+        catch (exp) {
+            alert("FATE ERROR!");
+            console.log(exp);
+
+        }
+    }
     render() {
+        if (!this.sourceinfo) return null;
         return (
             <Grid>
                 <PageHeader>
-                    Srouce1 <small>Detail</small>
+                    {this.sourceinfo.name} <small>Detail</small>
                 </PageHeader>
                 <Row>
                     <Col md={12}>
-                        <form>
+                        <form action={API.datasource.edit} method='post' onSubmit={this.handleSubmit}>
                             <FormGroup controlId="name">
                                 <ControlLabel>Name:</ControlLabel>
                                 <FormControl
@@ -29,6 +96,8 @@ class EditSource extends React.Component {
                                     type="text"
                                     placeholder="Enter Name"
                                     name="name"
+                                    defaultValue={this.sourceinfo.name}
+
                                 />
                             </FormGroup>
                             <FormGroup controlId="connstr">
@@ -38,12 +107,19 @@ class EditSource extends React.Component {
                                     type="text"
                                     placeholder="Enter Connection String"
                                     name="connstr"
+                                    defaultValue={this.sourceinfo.url}
                                 />
                                 <Button bsStyle="info" >Test</Button>
                             </FormGroup>
                             <FormGroup controlId="type">
                                 <ControlLabel>Type:</ControlLabel>
-                                <FormControl componentClass="select" name="type" id="type" placeholder="select">
+                                <FormControl
+                                    componentClass="select"
+                                    name="type"
+                                    id="type"
+                                    placeholder="select"
+                                    defaultValue={this.sourceinfo.type}
+                                >
                                     <option value="mysql">Mysql/Mariadb</option>
                                     <option value="postgresql">Postgresql</option>
                                     <option value="mongodb">Mongodb</option>

@@ -12,7 +12,50 @@ import * as _ from 'lodash';
 @inject("user")
 @observer
 class AddSource extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        const act = event.target.action;
+        const method = event.target.method;
+        const name = $("#name").val();
+        const connstr = $("#connstr").val();
+        const type = $("#type").val();
+        if (name.length < 1 || connstr.length < 1) {
+            alert("name or connectionstring must not blank");
+            return;
+        }
+        const req = {
+            url: act,
+            method: method,
+            dataType: "json",
+            data: {
+                name: name,
+                url: connstr,
+                type: type,
+                other:"{}",
+            },
+        };
+        try {
+            const result = await $.ajax(req);
+            if (result && result.status == 0) {
+                alert("add successful！");
+                window.location.href="/source/";
+            }
+            else {
+                alert(result.msg ? result.msg : " Server Error");
+            }
+        }
+        catch (exp) {
+            alert("FATE ERROR!");
+            console.log(exp);
 
+        }
+
+
+    }
     render() {
         return (
             <Grid>
@@ -21,7 +64,7 @@ class AddSource extends React.Component {
                 </PageHeader>
                 <Row>
                     <Col md={12}>
-                        <form>
+                        <form action={API.datasource.add} method='post' onSubmit={this.handleSubmit}>
                             <FormGroup controlId="name">
                                 <ControlLabel>Name:</ControlLabel>
                                 <FormControl
@@ -29,6 +72,7 @@ class AddSource extends React.Component {
                                     type="text"
                                     placeholder="Enter Name"
                                     name="name"
+                                    defaultValue=""
                                 />
                             </FormGroup>
                             <FormGroup controlId="connstr">
@@ -38,12 +82,16 @@ class AddSource extends React.Component {
                                     type="text"
                                     placeholder="Enter Connection String"
                                     name="connstr"
+                                    defaultValue=""
                                 />
                                 <Button bsStyle="info" >Test</Button>
                             </FormGroup>
                             <FormGroup controlId="type">
                                 <ControlLabel>Type:</ControlLabel>
-                                <FormControl componentClass="select" name="type" id="type" placeholder="select">
+                                <FormControl componentClass="select"
+                                    name="type"
+                                    id="type"
+                                    placeholder="select">
                                     <option value="mysql">Mysql/Mariadb</option>
                                     <option value="postgresql">Postgresql</option>
                                     <option value="mongodb">Mongodb</option>
