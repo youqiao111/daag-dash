@@ -100,7 +100,7 @@ class EditUser extends React.Component {
                 </PageHeader>
                 <Row>
                     <Col md={12}>
-                        <form  action={API.user.edit} method='post' onSubmit={this.handleSubmit}>
+                        <form action={API.user.edit} method='post' onSubmit={this.handleSubmit}>
                             <FormGroup controlId="name">
                                 <ControlLabel>Name:</ControlLabel>
                                 <FormControl
