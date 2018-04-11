@@ -3,11 +3,12 @@ package daag.model.v1.datasource.Vo;
 import java.util.Date;
 
 /**
- * Created by yq on 2018/4/2.
+ * Created by yq on 2018/4/11.
  */
-public class ListDataSource {
+public class DetailDataSource {
 
     private Integer id;             // 主键id
+    private Integer user_id;        // 创建人id
     private String username;        // 创建用户
     private String name;            // 名称
     private String url;             // jdbc链接
@@ -22,6 +23,14 @@ public class ListDataSource {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {

@@ -148,7 +148,7 @@ public class UserController extends BaseController {
                     user.setPassword(byId.getPassword());
                     user.setSalt(byId.getSalt());
                 }
-                if (this.userService.update(user) >= 0) {
+                if (this.userService.update(user) > 0) {
                     if (!StringUtil.isEmpty(editUser.getRoles())){
                         // 清空原角色
                         this.sysRoleService.deleteByUserId(user.getId());
@@ -206,7 +206,7 @@ public class UserController extends BaseController {
                         user.setPassword(sessionUser.getPassword());
                         user.setSalt(sessionUser.getSalt());
                     }
-                    if (this.userService.update(user) >= 0) {
+                    if (this.userService.update(user) > 0) {
                         status = 0;
                         msg = "修改成功";
                     } else {

@@ -1,7 +1,9 @@
 package daag.service.v1.datasource.impl;
 
+import daag.dao.mapper.v1.datasource.DataSourceDao;
 import daag.dao.mapper.v1.datasource.DataSourceMapper;
 import daag.model.v1.datasource.DataSource;
+import daag.model.v1.datasource.Vo.DetailDataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
 import daag.model.v1.datasource.Vo.ListDataSource;
 import daag.service.v1.datasource.DataSourceService;
@@ -19,8 +21,11 @@ public class DataSourceServiceImpl implements DataSourceService {
     @Autowired
     private DataSourceMapper dataSourceMapper;
 
+    @Autowired
+    private DataSourceDao dataSourceDao;
+
     @Override
-    public DataSource findById(Integer id) {
+    public DetailDataSource findById(Integer id) {
         return this.dataSourceMapper.findById(id);
     }
 
@@ -42,5 +47,10 @@ public class DataSourceServiceImpl implements DataSourceService {
     @Override
     public int deleteById(Integer id) {
         return this.dataSourceMapper.deleteById(id);
+    }
+
+    @Override
+    public int test(String url, String type) {
+        return this.dataSourceDao.test(url,type);
     }
 }

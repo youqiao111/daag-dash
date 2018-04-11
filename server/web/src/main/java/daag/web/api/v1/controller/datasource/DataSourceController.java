@@ -3,6 +3,7 @@ package daag.web.api.v1.controller.datasource;
 import daag.model.v1.ResultJson;
 import daag.model.v1.datasource.DataSource;
 import daag.model.v1.datasource.Vo.AddDataSource;
+import daag.model.v1.datasource.Vo.DetailDataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
 import daag.model.v1.datasource.Vo.ListDataSource;
 import daag.model.v1.slice.Slice;
@@ -103,7 +104,7 @@ public class DataSourceController extends BaseController {
     public ResultJson datasource_detail(@PathVariable("id") Integer id){
         Integer status = -1;
         String msg = "";
-        DataSource dataSource = this.dataSourceService.findById(id);
+        DetailDataSource dataSource = this.dataSourceService.findById(id);
         if (dataSource != null){
             status = 0;
         }
@@ -122,7 +123,7 @@ public class DataSourceController extends BaseController {
         String msg = "";
         try {
             if (DataSourceValidator.convert(editDataSource)){
-                if (this.dataSourceService.update(editDataSource) >= 0){
+                if (this.dataSourceService.update(editDataSource) > 0){
                     status = 0;
                     msg = "修改成功";
                 }else {
@@ -146,8 +147,7 @@ public class DataSourceController extends BaseController {
     public ResultJson datasource_delete(Integer id){
         Integer status = -1;
         String msg = "";
-        List<Slice> sliceList = this.sliceService.findByDataSourceId(id);
-        if (sliceList.size() > 0){
+        if (this.sliceService.findByDataSourceId(id) > 0){
             msg = "删除失败，该DataSource下存在Slice";
         }else {
             if (this.dataSourceService.deleteById(id) > 0){
@@ -156,6 +156,19 @@ public class DataSourceController extends BaseController {
             }else {
                 msg = "删除失败";
             }
+        }
+        return resultJson(status,msg);
+    }
+
+    @ApiOperation(value = "DataSource连接测试")
+    @PostMapping("/test")
+    public ResultJson datasource_test(String url,String type){
+        Integer status = -1;
+        String msg = "";
+        if (this.dataSourceService.test(url, type) == 1){
+            status = 1;
+        }else {
+            msg = "url或type错误";
         }
         return resultJson(status,msg);
     }

@@ -1,6 +1,7 @@
 package daag.dao.mapper.v1.datasource;
 
 import daag.model.v1.datasource.DataSource;
+import daag.model.v1.datasource.Vo.DetailDataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
 import daag.model.v1.datasource.Vo.ListDataSource;
 import org.apache.ibatis.annotations.*;
@@ -13,8 +14,8 @@ import java.util.List;
 @Mapper
 public interface DataSourceMapper {
 
-    @Select("select id,name,url,other,user_id,type,createtime,updatetime from content_datasource where id = #{id}")
-    DataSource findById(Integer id);
+    @Select("select a.*,b.username from content_datasource a,sys_user b where a.id = #{id} and a.user_id = b.id")
+    DetailDataSource findById(Integer id);
 
     @Select("select a.*,b.username from content_datasource a,sys_user b where a.user_id = b.id")
     List<ListDataSource> findAll();
@@ -28,4 +29,7 @@ public interface DataSourceMapper {
 
     @Delete("delete from content_datasource where id = #{id}")
     int deleteById(Integer id);
+
+    int test(String url,String type);
+
 }

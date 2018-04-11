@@ -11,4 +11,7 @@ public class CodeMsg {
     public final static int    DataSourceParamErrCode = 401002;        //DataSource页面传参不可为空
     public final static String DataSourceParamErrMsg  = "DataSource页面传参不可为空";
 
+    public final static int    SliceParamErrCode = 401003;        //Slice页面传参不可为空
+    public final static String SliceParamErrMsg  = "Slice页面传参不可为空";
+
 }
