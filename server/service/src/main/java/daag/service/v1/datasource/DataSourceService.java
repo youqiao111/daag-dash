@@ -22,5 +22,5 @@ public interface DataSourceService {
 
     int deleteById(Integer id);
 
-    int test(String url,String type);
+    int test(String url,String type) throws Exception;
 }

@@ -50,7 +50,7 @@ public class DataSourceServiceImpl implements DataSourceService {
     }
 
     @Override
-    public int test(String url, String type) {
+    public int test(String url, String type) throws Exception {
         return this.dataSourceDao.test(url,type);
     }
 }

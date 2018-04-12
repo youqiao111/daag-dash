@@ -28,5 +28,5 @@ public interface SliceService {
 
     int update(UpdateSlice updateSlice);
 
-    List query(String sql,String url,String type);
+    List query(String sql,String url,String type) throws Exception;
 }

@@ -65,7 +65,7 @@ public class SliceServiceImpl implements SliceService {
     }
 
     @Override
-    public List query(String sql, String url, String type) {
+    public List query(String sql, String url, String type) throws Exception {
         return this.sliceDao.query(sql,url,type);
     }
 }

@@ -15,16 +15,12 @@ public class SliceDao extends BaseDao {
 
     private JdbcTemplate jdbcTemplate;
 
-    public List query(String sql,String url,String type){
+    public List query(String sql,String url,String type) throws Exception{
         List list = new ArrayList<>();
         String driverClassName = getUtil().getDriverClassName(type);
         if (driverClassName != null) {
-            try {
-                jdbcTemplate = getJdbcTemplate(url,driverClassName);
-                list = jdbcTemplate.queryForList(sql);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            jdbcTemplate = getJdbcTemplate(url,driverClassName);
+            list = jdbcTemplate.queryForList(sql);
         }
         return list;
     }

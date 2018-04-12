@@ -12,16 +12,12 @@ public class DataSourceDao extends BaseDao {
 
     private JdbcTemplate jdbcTemplate;
 
-    public int test(String url, String type) {
+    public int test(String url, String type) throws Exception {
         Integer result = -1;
         String driverClassName = getUtil().getDriverClassName(type);
         if (driverClassName != null) {
-            try {
-                jdbcTemplate = getJdbcTemplate(url, driverClassName);
-                result = jdbcTemplate.queryForObject("select 1", Integer.class);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            jdbcTemplate = getJdbcTemplate(url, driverClassName);
+            result = jdbcTemplate.queryForObject("select 1", Integer.class);
         }
         return result;
     }

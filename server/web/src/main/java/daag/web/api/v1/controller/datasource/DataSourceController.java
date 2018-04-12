@@ -165,10 +165,15 @@ public class DataSourceController extends BaseController {
     public ResultJson datasource_test(String url,String type){
         Integer status = -1;
         String msg = "";
-        if (this.dataSourceService.test(url, type) == 1){
-            status = 1;
-        }else {
-            msg = "url或type错误";
+        try {
+            if (this.dataSourceService.test(url, type) == 1){
+                status = 0;
+            }else {
+                msg = "url或type错误";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg = e.getMessage();
         }
         return resultJson(status,msg);
     }
