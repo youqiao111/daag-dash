@@ -16,7 +16,7 @@ public class UserValidator {
     public static boolean convert(EditUser editUser) throws DaagException{
 
         if (StringUtil.isEmpty(editUser.getUsername()) || StringUtil.isEmpty(editUser.getName())
-                ||StringUtil.isEmpty(editUser.getEmail())){
+                ||StringUtil.isEmpty(editUser.getEmail()) || editUser.getAvailable() == null){
             throw new DaagException(CodeMsg.UserParamErrMsg,CodeMsg.UserParamErrCode);
         }
         return true;
@@ -35,7 +35,8 @@ public class UserValidator {
 
         if (StringUtil.isEmpty(addUser.getUsername()) || StringUtil.isEmpty(addUser.getName())
                 || StringUtil.isEmpty(addUser.getEmail()) || StringUtil.isEmpty(addUser.getPlainpassword())
-                || StringUtil.isEmpty(addUser.getReplainpassword()) || StringUtil.isEmpty(addUser.getRoles())){
+                || StringUtil.isEmpty(addUser.getReplainpassword()) || StringUtil.isEmpty(addUser.getRoles())
+                || addUser.getAvailable() == null){
             throw new DaagException(CodeMsg.UserParamErrMsg,CodeMsg.UserParamErrCode);
         }
         return true;

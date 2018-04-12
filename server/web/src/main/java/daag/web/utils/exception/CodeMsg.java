@@ -14,4 +14,7 @@ public class CodeMsg {
     public final static int    SliceParamErrCode = 401003;        //Slice页面传参不可为空
     public final static String SliceParamErrMsg  = "Slice页面传参不可为空";
 
+    public final static int    DashBoardParamErrCode = 401003;        //DashBoard页面传参不可为空
+    public final static String DashBoardErrMsg  = "DashBoard页面传参不可为空";
+
 }

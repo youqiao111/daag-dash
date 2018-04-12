@@ -197,12 +197,14 @@ public class SliceController extends BaseController {
         DetailDataSource dataSource = this.dataSourceService.findById(datasource_id);
         if (dataSource != null){
             try {
-                status = 0;
                 list = this.sliceService.query(sql, dataSource.getUrl(), dataSource.getType());
+                status = 0;
             } catch (Exception e) {
                 e.printStackTrace();
                 msg = e.getMessage();
             }
+        }else {
+            msg = "无对应DataSource";
         }
         return resultJson(status,msg,list);
     }
