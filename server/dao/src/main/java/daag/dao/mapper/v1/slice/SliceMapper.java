@@ -18,10 +18,10 @@ public interface SliceMapper {
     @Select("select count(1) from content_slice where datasource_id = #{datasource_id}")
     int findByDataSourceId(Integer datasource_id);
 
-    @Select("select a.*,b.name datasource_name,c.username from content_slice a,content_datasource b,sys_user c where a.id = #{id} and a.datasource_id = b.id and a.user_id = c.id")
+    @Select("select a.*,b.name datasource_name,c.username from content_slice a left join content_datasource b on a.datasource_id = b.id join sys_user c on a.user_id = c.id where a.id = #{id}")
     DetailSlice findById(Integer id);
 
-    @Select("select a.*,b.name datasource_name,c.username from content_slice a,content_datasource b,sys_user c where a.datasource_id = b.id and a.user_id = c.id")
+    @Select("select a.*,b.name datasource_name,c.username from content_slice a left join content_datasource b on a.datasource_id = b.id join sys_user c on a.user_id = c.id")
     List<ListSlice> findAll();
 
     @Insert("insert into content_slice(name,createtime,user_id,description,type,slicesql,setting,datasource_id) values(#{name},#{createtime},#{user_id},#{description},'','','',0)")

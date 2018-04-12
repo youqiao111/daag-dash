@@ -1,7 +1,7 @@
 package daag.service.v1.slice.impl;
 
 import daag.dao.mapper.v1.slice.SliceMapper;
-import daag.dao.mapper.v1.slice.provider.SliceDao;
+import daag.dao.mapper.v1.slice.SliceDao;
 import daag.model.v1.slice.Slice;
 import daag.model.v1.slice.Vo.DetailSlice;
 import daag.model.v1.slice.Vo.ListSlice;

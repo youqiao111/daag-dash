@@ -1,4 +1,4 @@
-package daag.dao.mapper.v1.slice.provider;
+package daag.dao.mapper.v1.slice;
 
 import daag.dao.mapper.v1.BaseDao;
 import org.springframework.jdbc.core.JdbcTemplate;

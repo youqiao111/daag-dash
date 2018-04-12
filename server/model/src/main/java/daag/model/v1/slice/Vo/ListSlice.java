@@ -13,7 +13,7 @@ public class ListSlice {
     private String type;                // 类型
     private Date createtime;            // 创建时间
     private Date updatetime;            // 修改时间
-    private Integer datasource_name;      // 数据源名称
+    private String datasource_name;      // 数据源名称
     private String description;                // 描述
 
     public Integer getId() {
@@ -64,11 +64,11 @@ public class ListSlice {
         this.updatetime = updatetime;
     }
 
-    public Integer getDatasource_name() {
+    public String getDatasource_name() {
         return datasource_name;
     }
 
-    public void setDatasource_name(Integer datasource_name) {
+    public void setDatasource_name(String datasource_name) {
         this.datasource_name = datasource_name;
     }
 

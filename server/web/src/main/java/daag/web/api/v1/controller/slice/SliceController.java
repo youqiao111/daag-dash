@@ -106,7 +106,7 @@ public class SliceController extends BaseController {
         if (slice != null){
             status = 0;
         }
-        return resultJson(status,msg);
+        return resultJson(status,msg,slice);
     }
 
     /**
