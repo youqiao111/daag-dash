@@ -73,8 +73,9 @@ public class UserController extends BaseController {
                     } else {
                         log.info("^^^^^^^^^^^^^^^^^^^^用户添加成功  end");
                         if (!StringUtil.isEmpty(addUser.getRoles())){
+                            String[] role_ids = addUser.getRoles().split(",");
                             // 分配角色
-                            this.sysRoleService.addAll(user.getId(),addUser.getRoles());
+                            this.sysRoleService.addAll(user.getId(),role_ids);
                         }
                         status = 0;
                         msg = "用户添加成功";
@@ -152,8 +153,9 @@ public class UserController extends BaseController {
                     if (!StringUtil.isEmpty(editUser.getRoles())){
                         // 清空原角色
                         this.sysRoleService.deleteByUserId(user.getId());
+                        String[] role_ids = editUser.getRoles().split(",");
                         // 分配新角色
-                        this.sysRoleService.addAll(user.getId(),editUser.getRoles());
+                        this.sysRoleService.addAll(user.getId(),role_ids);
                     }
                     status = 0;
                     msg = "修改成功";

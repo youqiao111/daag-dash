@@ -15,8 +15,8 @@ public class SysRoleServiceImpl implements SysRoleService {
     private SysRoleMapper sysRoleMapper;
 
     @Override
-    public int addAll(Integer user_id, String roleIds) {
-        return this.sysRoleMapper.addAll(user_id,roleIds);
+    public int addAll(Integer user_id, String[] role_ids) {
+        return this.sysRoleMapper.addAll(user_id,role_ids);
     }
 
     @Override

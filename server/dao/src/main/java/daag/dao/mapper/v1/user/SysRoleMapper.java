@@ -21,7 +21,7 @@ public interface SysRoleMapper {
     List<SysRole> findByUserId(Integer user_id);
 
     @InsertProvider(type = SysRoleProvider.class,method = "addAll")
-    int addAll(@Param("user_id") Integer user_id, @Param("roleIds") String roleIds);
+    int addAll(@Param("user_id") Integer user_id, @Param("role_ids") String[] role_ids);
 
     @Delete("delete from sys_user_role where user_id = #{user_id}")
     int deleteByUserId(Integer user_id);
