@@ -12,19 +12,19 @@ public class SliceProvider {
         StringBuffer sb = new StringBuffer();
         sb.append("update content_slice set ");
         if (updateSlice.getType() != null && updateSlice.getType() != ""){
-            sb.append("type = " + updateSlice.getType() + ",");
+            sb.append("type = #{type},");
         }
         if (updateSlice.getSlicesql() != null && updateSlice.getSlicesql() != ""){
-            sb.append("slicesql = " + updateSlice.getSlicesql() + ",");
+            sb.append("slicesql = #{slicesql},");
         }
         if (updateSlice.getSetting() != null && updateSlice.getSetting() != ""){
-            sb.append("setting = " + updateSlice.getSetting() + ",");
+            sb.append("setting = #{setting},");
         }
         if (updateSlice.getDatasource_id() != null){
-            sb.append("datasource_id = " + updateSlice.getDatasource_id() + ",");
+            sb.append("datasource_id = #{datasource_id},");
         }
         String sql = sb.substring(0, sb.length() - 1);
-        sql += " where id = " + updateSlice.getId();
+        sql += " where id = #{id}";
         return sql;
 
     }

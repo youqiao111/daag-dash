@@ -9,13 +9,13 @@ public class DashBoardProvider {
 
     public String edit(EditDashBoard editDashBoard){
         StringBuffer sb = new StringBuffer();
-        sb.append("update content_dashboard set name = " + editDashBoard.getName());
-        sb.append(",ispublic = " + editDashBoard.getIspublic());
+        sb.append("update content_dashboard set name = #{name}");
+        sb.append(",ispublic = #{ispublic}");
         if (editDashBoard.getSetting() != null && editDashBoard.getSetting() != "") {
-            sb.append(",setting = " + editDashBoard.getSetting());
+            sb.append(",setting = #{setting}");
         }
-        sb.append(",description = " + editDashBoard.getDescription());
-        sb.append(" where id = " + editDashBoard.getId());
+        sb.append(",description = #{description}");
+        sb.append(" where id = #{id}");
         return sb.toString();
     }
 }
