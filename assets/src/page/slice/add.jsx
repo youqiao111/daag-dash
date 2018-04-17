@@ -13,7 +13,48 @@ import * as _ from 'lodash';
 @inject("user")
 @observer
 class AddSlice extends React.Component {
+    
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleSubmit = async (event) => {
+        event.preventDefault();
+        const act = event.target.action;
+        const method = event.target.method;
+        const name = $("#name").val();
+        const desc = $("#desc").val();
+        if (name.length < 1 || desc.length < 1) {
+            alert("name and description must not blank");
+            return;
+        }
+        const req = {
+            url: act,
+            method: method,
+            dataType: "json",
+            data: {
+                name: name,
+                description: desc,
+            },
+        };
+        try {
+            const result = await $.ajax(req);
+            if (result && result.status == 0) {
+                alert("add successful！");
+                window.location.href="/slice/";
+            }
+            else {
+                alert(result.msg ? result.msg : " Server Error");
+            }
+        }
+        catch (exp) {
+            alert("FATE ERROR!");
+            console.log(exp);
 
+        }
+
+
+    }
     render() {
         return (
             <Grid>
@@ -22,7 +63,7 @@ class AddSlice extends React.Component {
                 </PageHeader>
                 <Row>
                     <Col md={12}>
-                        <form>
+                        <form action={API.slice.add} method='post' onSubmit={this.handleSubmit}>
                             <FormGroup controlId="name">
                                 <ControlLabel>Name:</ControlLabel>
                                 <FormControl

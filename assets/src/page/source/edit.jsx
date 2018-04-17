@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import bootstrap from "bootstrap/dist/css/bootstrap.css"
-import { Grid, Row, Col, PageHeader, ButtonToolbar, Button, Panel, FormGroup, ControlLabel, FormControl, Glyphicon, Checkbox } from 'react-bootstrap';
+import { Grid, Row, Col, PageHeader, ButtonToolbar, Button, Panel, FormGroup, ControlLabel, FormControl, HelpBlock,Glyphicon, Checkbox } from 'react-bootstrap';
 import LoginContainer from '../../LoginContainer'
 import P_Navbar from '../../partial/nav-bar';
 import { observer, inject } from "mobx-react";
@@ -56,18 +56,50 @@ class EditSource extends React.Component {
             method: method,
             dataType: "json",
             data: {
-                id:this.sourceinfo.id,
+                id: this.sourceinfo.id,
                 name: name,
                 url: connstr,
                 type: type,
-                other:"{}",
+                other: "{}",
             },
         };
         try {
             const result = await $.ajax(req);
             if (result && result.status == 0) {
                 alert("update successful！");
-                window.location.href="/source/";
+                window.location.href = "/source/";
+            }
+            else {
+                alert(result.msg ? result.msg : " Server Error");
+            }
+        }
+        catch (exp) {
+            alert("FATE ERROR!");
+            console.log(exp);
+
+        }
+    }
+    handleTest = async () => {
+        let connstr = $("#connstr").val();
+        let type = $("#type").val();
+        if (connstr.length < 1) {
+            alert("Connection String can NOT blank!");
+            return;
+        }
+        const req = {
+            url: API.datasource.test,
+            method: "post",
+            dataType: "json",
+            data: {
+                type: type,
+                url: connstr,
+            },
+        };
+        try {
+            const result = await $.ajax(req);
+            if (result && result.status == 0) {
+                alert("test successful！");
+
             }
             else {
                 alert(result.msg ? result.msg : " Server Error");
@@ -109,7 +141,8 @@ class EditSource extends React.Component {
                                     name="connstr"
                                     defaultValue={this.sourceinfo.url}
                                 />
-                                <Button bsStyle="info" >Test</Button>
+                                <HelpBlock>Example:jdbc:mysql://localhost:3306/im?user=root&password=root</HelpBlock>
+                                <Button bsStyle="info" onClick={() => this.handleTest()} >Test</Button>
                             </FormGroup>
                             <FormGroup controlId="type">
                                 <ControlLabel>Type:</ControlLabel>
@@ -121,8 +154,6 @@ class EditSource extends React.Component {
                                     defaultValue={this.sourceinfo.type}
                                 >
                                     <option value="mysql">Mysql/Mariadb</option>
-                                    <option value="postgresql">Postgresql</option>
-                                    <option value="mongodb">Mongodb</option>
                                 </FormControl>
                             </FormGroup>
 

@@ -8,14 +8,90 @@ import { observer, inject } from "mobx-react";
 import { observable, action, useStrict, runInAction } from "mobx";
 import API from '../../setting';
 import * as _ from 'lodash';
-
+import moment from 'moment';
 
 @inject("user")
 @observer
 class SliceList extends React.Component {
-    render() {
-        return (
+    @observable list = null
+    async componentWillMount() {
+        try {
+            const req = {
+                url: API.slice.list,
+                method: "GET",
+                dataType: "json",
+            };
+            const result = await $.ajax(req);
+            console.log(result);
+            if (result && result.status == 0) {
+                this.list = result.data;
+            }
+            else {
+                alert(result.msg);
+            }
+        }
+        catch (exp) {
+            console.log(exp);
+            alert("Fate Error!!");
+        }
 
+    }
+    handleClick = async (id) => {
+        const con = confirm("Confirm?")
+        if (con) {
+            const req = {
+                url: API.slice.delete,
+                method: "post",
+                dataType: "json",
+                data: {
+                    id: id,
+                }
+            };
+            try {
+                const result = await $.ajax(req);
+                if (result && result.status == 0) {
+                    //alert('done');
+                    this.componentWillMount()
+                }
+                else {
+                    alert(result.msg ? result.msg : "Server Error!");
+                }
+
+            }
+            catch (exp) {
+                alert("Fate Error!");
+                console.log(exp);
+            }
+
+        }
+    }
+    render() {
+        if (!this.list) {
+            return null;
+        }
+        const tr = [];
+        this.list.forEach((item) => {
+            tr.push(
+                <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>{item.type}</td>
+                    <td>{item.datasource_name}</td>
+                    <td>{item.username}</td>
+                    <td>{moment(item.updatetime).format("YYYY-MM-DD hh:mm:ss")}</td>
+                    <td>
+                        <ButtonToolbar>
+                            <Button bsSize="xsmall" href={`/slice/explorer.html?id=${item.id}`}><Glyphicon glyph="search" /></Button>
+                            <Button bsSize="xsmall" href={`/slice/edit.html?id=${item.id}`}><Glyphicon glyph="edit" /></Button>
+                            <Button bsSize="xsmall" onClick={() => this.handleClick(item.id)}><Glyphicon glyph="remove" /></Button>
+                        </ButtonToolbar>
+
+                    </td>
+                </tr>
+            );
+
+        });
+        return (
             <Grid>
                 <PageHeader>
                     Slices <small>Totals 100</small>
@@ -36,92 +112,7 @@ class SliceList extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Mark</td>
-                                    <td>
-                                        <ButtonToolbar>
-                                            <Button bsSize="xsmall" href="/slice/edit.html"><Glyphicon glyph="edit" /></Button>
-                                            <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                                        </ButtonToolbar>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Mark</td>
-                                    <td>
-                                        <ButtonToolbar>
-                                            <Button bsSize="xsmall" href="/slice/edit.html"><Glyphicon glyph="edit" /></Button>
-                                            <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                                        </ButtonToolbar>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Mark</td>
-                                    <td>
-                                        <ButtonToolbar>
-                                            <Button bsSize="xsmall" href="/slice/edit.html"><Glyphicon glyph="edit" /></Button>
-                                            <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                                        </ButtonToolbar>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Larry the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Mark</td>
-                                    <td>
-                                        <ButtonToolbar>
-                                            <Button bsSize="xsmall" href="/slice/edit.html"><Glyphicon glyph="edit" /></Button>
-                                            <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                                        </ButtonToolbar>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Larry the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Mark</td>
-                                    <td>
-                                        <ButtonToolbar>
-                                            <Button bsSize="xsmall" href="/slice/edit.html"><Glyphicon glyph="edit" /></Button>
-                                            <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                                        </ButtonToolbar>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Mark</td>
-                                    <td>
-                                        <ButtonToolbar>
-                                            <Button title='Edit' bsSize="xsmall" href="/slice/edit.html"><Glyphicon glyph="edit" /></Button>
-                                            <Button bsSize="xsmall" href="/slice/explorer.html"><Glyphicon glyph="search" /></Button>
-                                            <Button bsSize="xsmall"><Glyphicon glyph="remove" /></Button>
-                                        </ButtonToolbar>
-                                    </td>
-                                </tr>
+                                {tr}
                             </tbody>
                         </Table>
                     </Col>
