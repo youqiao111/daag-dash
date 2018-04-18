@@ -3,6 +3,7 @@ package daag.service.v1.dashboard;
 import daag.model.v1.dashboard.DashBoard;
 import daag.model.v1.dashboard.Vo.EditDashBoard;
 import daag.model.v1.dashboard.Vo.ListDashBoard;
+import daag.model.v1.dashboard.Vo.PublicDashBoard;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface DashBoardService {
     ListDashBoard findById(Integer id);
 
     List<ListDashBoard> findAll();
+
+    List<PublicDashBoard> findPublic();
 
     int deleteByDashId(Integer dashboard_id);
 

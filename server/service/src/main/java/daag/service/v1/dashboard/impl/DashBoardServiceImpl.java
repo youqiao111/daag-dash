@@ -4,6 +4,7 @@ import daag.dao.mapper.v1.dashboard.DashBoardMapper;
 import daag.model.v1.dashboard.DashBoard;
 import daag.model.v1.dashboard.Vo.EditDashBoard;
 import daag.model.v1.dashboard.Vo.ListDashBoard;
+import daag.model.v1.dashboard.Vo.PublicDashBoard;
 import daag.service.v1.dashboard.DashBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,11 @@ public class DashBoardServiceImpl implements DashBoardService {
     @Override
     public List<ListDashBoard> findAll() {
         return this.dashBoardMapper.findAll();
+    }
+
+    @Override
+    public List<PublicDashBoard> findPublic() {
+        return this.dashBoardMapper.findPublic();
     }
 
     @Override

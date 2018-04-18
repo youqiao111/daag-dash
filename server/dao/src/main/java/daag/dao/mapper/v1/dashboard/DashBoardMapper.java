@@ -4,6 +4,7 @@ import daag.dao.mapper.v1.dashboard.provider.DashBoardProvider;
 import daag.model.v1.dashboard.DashBoard;
 import daag.model.v1.dashboard.Vo.EditDashBoard;
 import daag.model.v1.dashboard.Vo.ListDashBoard;
+import daag.model.v1.dashboard.Vo.PublicDashBoard;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public interface DashBoardMapper {
 
     @Select("select a.*,b.username from content_dashboard a,sys_user b where a.user_id = b.id")
     List<ListDashBoard> findAll();
+
+    @Select("select a.*,b.username from content_dashboard a,sys_user b where a.user_id = b.id and a.ispublic = 1")
+    List<PublicDashBoard> findPublic();
 
     @Delete("delete from content_dashboard_slice where dashboard_id = #{dashboard_id}")
     int deleteByDashId(Integer dashboard_id);

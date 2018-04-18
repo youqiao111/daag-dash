@@ -5,6 +5,7 @@ import daag.model.v1.dashboard.DashBoard;
 import daag.model.v1.dashboard.Vo.AddDashBoard;
 import daag.model.v1.dashboard.Vo.EditDashBoard;
 import daag.model.v1.dashboard.Vo.ListDashBoard;
+import daag.model.v1.dashboard.Vo.PublicDashBoard;
 import daag.model.v1.user.User;
 import daag.service.v1.dashboard.DashBoardService;
 import daag.web.api.v1.BaseController;
@@ -83,6 +84,24 @@ public class DashBoardController extends BaseController {
         Integer status = -1;
         String msg = "";
         List<ListDashBoard> dashBoardList = this.dashBoardService.findAll();
+        if (dashBoardList.size() > 0){
+            status = 0;
+        }else {
+            msg = "暂无数据";
+        }
+        return resultJson(status,msg,dashBoardList);
+    }
+
+    /**
+     * 公开DashBoard列表
+     * @return
+     */
+    @ApiOperation(value = "公开DashBoard列表")
+    @GetMapping("/explorer")
+    public ResultJson dashboard_explorer(){
+        Integer status = -1;
+        String msg = "";
+        List<PublicDashBoard> dashBoardList = this.dashBoardService.findPublic();
         if (dashBoardList.size() > 0){
             status = 0;
         }else {

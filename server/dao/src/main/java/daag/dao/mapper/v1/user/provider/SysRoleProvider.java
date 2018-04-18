@@ -13,7 +13,7 @@ public class SysRoleProvider {
         MessageFormat mf = new MessageFormat("(#'{'user_id},#'{'role_ids[{0}]})");
         for (int i=0;i<role_ids.length;i++){
             sb.append(mf.format(new Object[]{i}));
-            if (i != (role_ids.length-1)){
+            if (i < (role_ids.length-1)){
                 sb.append(",");
             }
         }
