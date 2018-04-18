@@ -6,10 +6,13 @@ import daag.model.v1.dashboard.Vo.AddDashBoard;
 import daag.model.v1.dashboard.Vo.EditDashBoard;
 import daag.model.v1.dashboard.Vo.ListDashBoard;
 import daag.model.v1.dashboard.Vo.PublicDashBoard;
+import daag.model.v1.slice.Slice;
 import daag.model.v1.user.User;
 import daag.service.v1.dashboard.DashBoardService;
+import daag.service.v1.slice.SliceService;
 import daag.web.api.v1.BaseController;
 import daag.web.api.v1.controller.dashboard.validator.DashBoardValidator;
+import daag.web.utils.StringUtil;
 import daag.web.utils.exception.DaagException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yq on 2018/4/12.
@@ -35,6 +40,9 @@ public class DashBoardController extends BaseController {
 
     @Autowired
     private DashBoardService dashBoardService;
+
+    @Autowired
+    private SliceService sliceService;
 
     /**
      * DashBoard添加
@@ -151,6 +159,34 @@ public class DashBoardController extends BaseController {
             msg = "传入参数异常";
         }
         return resultJson(status,msg);
+    }
+
+    /**
+     * DashBoard数据展示
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "DashBoard数据展示")
+    @GetMapping("/slices")
+    public ResultJson dashboard_slices(String id){
+        Integer status = -1;
+        String msg = "";
+        Map<Integer,List> map = new HashMap<>();
+        if (!StringUtil.isEmpty(id)){
+            List<Slice> sliceList = this.sliceService.findByIds(id);
+            for (Slice slice:sliceList){
+                if (slice.getDataSource() != null){
+                    try {
+                        List list = this.sliceService.query(slice.getSlicesql(), slice.getDataSource().getUrl(), slice.getDataSource().getType());
+                        map.put(slice.getId(),list);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        map.put(slice.getId(),null);
+                    }
+                }
+            }
+        }
+        return resultJson(status,msg,map);
     }
 
     /**

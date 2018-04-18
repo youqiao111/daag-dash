@@ -30,6 +30,4 @@ public interface DataSourceMapper {
     @Delete("delete from content_datasource where id = #{id}")
     int deleteById(Integer id);
 
-    int test(String url,String type);
-
 }

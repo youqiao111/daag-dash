@@ -169,7 +169,7 @@ public class SliceController extends BaseController {
     public ResultJson slice_delete(Integer id){
         Integer status = -1;
         String msg = "";
-        if(this.sliceService.findDashBySliceId(id) > 0){
+        if(this.sliceService.countDashBySliceId(id) > 0){
             msg = "删除失败，该Slice存在DashBoard";
         }else {
             if (this.sliceService.deleteById(id) > 0){

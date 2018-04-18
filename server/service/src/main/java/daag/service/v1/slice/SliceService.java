@@ -20,7 +20,7 @@ public interface SliceService {
 
     int add(Slice slice);
 
-    int findDashBySliceId(Integer slice_id);
+    int countDashBySliceId(Integer slice_id);
 
     int deleteById(Integer id);
 
@@ -29,4 +29,6 @@ public interface SliceService {
     int update(UpdateSlice updateSlice);
 
     List query(String sql,String url,String type) throws Exception;
+
+    List<Slice> findByIds(String ids);
 }

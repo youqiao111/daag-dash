@@ -45,8 +45,8 @@ public class SliceServiceImpl implements SliceService {
     }
 
     @Override
-    public int findDashBySliceId(Integer slice_id) {
-        return this.sliceMapper.findDashBySliceId(slice_id);
+    public int countDashBySliceId(Integer slice_id) {
+        return this.sliceMapper.countDashBySliceId(slice_id);
     }
 
     @Override
@@ -67,5 +67,10 @@ public class SliceServiceImpl implements SliceService {
     @Override
     public List query(String sql, String url, String type) throws Exception {
         return this.sliceDao.query(sql,url,type);
+    }
+
+    @Override
+    public List<Slice> findByIds(String ids) {
+        return this.sliceMapper.findByIds(ids);
     }
 }

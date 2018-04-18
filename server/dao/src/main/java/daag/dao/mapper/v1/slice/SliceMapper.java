@@ -1,6 +1,7 @@
 package daag.dao.mapper.v1.slice;
 
 import daag.dao.mapper.v1.slice.provider.SliceProvider;
+import daag.model.v1.datasource.Vo.DetailDataSource;
 import daag.model.v1.slice.Slice;
 import daag.model.v1.slice.Vo.DetailSlice;
 import daag.model.v1.slice.Vo.ListSlice;
@@ -29,7 +30,7 @@ public interface SliceMapper {
     int add(Slice slice);
 
     @Select("select count(1) from content_dashboard_slice where slice_id = #{slice_id}")
-    int findDashBySliceId(Integer slice_id);
+    int countDashBySliceId(Integer slice_id);
 
     @Delete("delete from content_slice where id = #{id}")
     int deleteById(Integer id);
@@ -39,4 +40,12 @@ public interface SliceMapper {
 
     @UpdateProvider(type = SliceProvider.class,method = "update")
     int update(UpdateSlice updateSlice);
+
+    @Select("select * from content_slice where id in (#{ids})")
+    @Results({
+            @Result(id = true,column = "datasource_id",property = "datasource_id"),
+            @Result(column = "datasource_id",property = "dataSource",javaType = DetailDataSource.class,
+            one = @One(select = "daag.dao.mapper.v1.datasource.DataSourceMapper.findById"))
+    })
+    List<Slice> findByIds(String ids);
 }

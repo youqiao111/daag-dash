@@ -1,5 +1,7 @@
 package daag.model.v1.slice;
 
+import daag.model.v1.datasource.Vo.DetailDataSource;
+
 import java.util.Date;
 
 /**
@@ -17,6 +19,8 @@ public class Slice {
     private String setting;             // 设置
     private Integer datasource_id;      // 数据源id
     private String description;         // 描述
+
+    private DetailDataSource dataSource;      // 数据源对象
 
     public Integer getId() {
         return id;
@@ -96,5 +100,13 @@ public class Slice {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public DetailDataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(DetailDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 }
