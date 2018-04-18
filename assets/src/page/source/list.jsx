@@ -13,7 +13,7 @@ import moment from 'moment';
 @inject("user")
 @observer
 class SourceList extends React.Component {
-    @observable list = null;
+    @observable list = null
     async componentWillMount() {
         try {
             const req = {
@@ -22,7 +22,7 @@ class SourceList extends React.Component {
                 dataType: "json",
             };
             const result = await $.ajax(req);
-            console.log(result);
+            //console.log(result);
             if (result && result.status == 0) {
                 this.list = result.data;
             }

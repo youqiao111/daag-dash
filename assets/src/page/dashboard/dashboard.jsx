@@ -13,6 +13,7 @@ import API from '../../setting';
     constructor(props) {
         super(props)
         ///console.log(this.props)
+        
     }
     render() {
         if (!this.props.user) return null;
