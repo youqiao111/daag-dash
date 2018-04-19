@@ -27,4 +27,6 @@ public interface DashBoardService {
     int deleteById(Integer id);
 
     int edit(EditDashBoard editDashBoard);
+
+    int update(Integer id,String setting);
 }

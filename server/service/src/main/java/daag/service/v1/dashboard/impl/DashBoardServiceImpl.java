@@ -59,4 +59,9 @@ public class DashBoardServiceImpl implements DashBoardService {
     public int edit(EditDashBoard editDashBoard) {
         return this.dashBoardMapper.edit(editDashBoard);
     }
+
+    @Override
+    public int update(Integer id, String setting) {
+        return this.dashBoardMapper.update(id,setting);
+    }
 }

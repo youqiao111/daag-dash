@@ -38,4 +38,7 @@ public interface DashBoardMapper {
 
     @UpdateProvider(type = DashBoardProvider.class,method = "edit")
     int edit(EditDashBoard editDashBoard);
+
+    @Update("update content_dashboard set setting = #{setting} where id = #{id}")
+    int update(@Param("id") Integer id,@Param("setting") String setting);
 }

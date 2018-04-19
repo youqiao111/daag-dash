@@ -161,6 +161,24 @@ public class DashBoardController extends BaseController {
         return resultJson(status,msg);
     }
 
+    @ApiOperation(value = "DashBoard_setting修改")
+    @PostMapping("/uodate")
+    public ResultJson dashboard_update(Integer id,String setting){
+        Integer status = -1;
+        String msg = "";
+        if (!StringUtil.isEmpty(id) && !StringUtil.isEmpty(setting)){
+            if (this.dashBoardService.update(id,setting) > 0){
+                status = 0;
+                msg = "修改成功";
+            }else {
+                msg = "修改失败";
+            }
+        }else {
+            msg = "传入参数异常";
+        }
+        return resultJson(status,msg);
+    }
+
     /**
      * DashBoard数据展示
      * @param id
