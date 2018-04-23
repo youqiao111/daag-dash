@@ -2,9 +2,9 @@ package daag.web.api.v1.controller.datasource.validator;
 
 import daag.model.v1.datasource.Vo.AddDataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
-import daag.web.utils.StringUtil;
-import daag.web.utils.exception.CodeMsg;
-import daag.web.utils.exception.DaagException;
+import daag.util.StringUtil;
+import daag.util.exception.CodeMsg;
+import daag.util.exception.DaagException;
 
 /**
  * Created by yq on 2018/4/4.

@@ -1,7 +1,6 @@
 package daag.dao.mapper.v1.slice.provider;
 
 import daag.model.v1.slice.Vo.UpdateSlice;
-//import daag.web.utils.StringUtil;
 
 /**
  * Created by yq on 2018/4/11.

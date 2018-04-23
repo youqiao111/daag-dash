@@ -1,6 +1,8 @@
 package daag.service.v1.user;
 
 import daag.model.v1.user.User;
+import daag.model.v1.user.Vo.AddUser;
+import daag.model.v1.user.Vo.EditUser;
 import daag.model.v1.user.Vo.UserInfo;
 
 import java.util.List;
@@ -11,9 +13,11 @@ public interface UserService {
 
     User findById(Integer id);
 
-    int add(User user);
+    int add(AddUser addUser);
 
     List<UserInfo> findAll();
+
+    int edit(EditUser editUser,User user);
 
     int update(User user);
 

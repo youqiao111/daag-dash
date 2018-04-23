@@ -1,4 +1,4 @@
-package daag.web.utils.exception;
+package daag.util.exception;
 
 /**
  * Created by yq on 2018/4/2.

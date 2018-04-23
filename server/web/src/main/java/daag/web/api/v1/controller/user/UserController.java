@@ -7,19 +7,17 @@ import daag.model.v1.user.Vo.AddUser;
 import daag.model.v1.user.Vo.DetailUser;
 import daag.model.v1.user.Vo.EditUser;
 import daag.model.v1.user.Vo.UpdateUser;
-import daag.service.v1.user.SysRoleService;
 import daag.service.v1.user.UserService;
+import daag.util.DassgUtil;
 import daag.web.api.v1.BaseController;
 import daag.web.api.v1.controller.user.validator.UserValidator;
-import daag.web.utils.StringUtil;
-import daag.web.utils.Utils;
+import daag.util.StringUtil;
 import daag.model.v1.ResultJson;
-import daag.web.utils.exception.DaagException;
+import daag.util.exception.DaagException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -41,15 +39,12 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SysRoleService sysRoleService;
-
     /**
-     * 添加接口
+     * User添加
      * @param addUser
      * @return
      */
-    @ApiOperation (value = "用户添加")
+    @ApiOperation (value = "User添加")
     @PostMapping("/add")
     @RequiresRoles("admin")
     public ResultJson user_add(AddUser addUser){
@@ -65,20 +60,12 @@ public class UserController extends BaseController {
                 if (newUserInstance != null) {
                     msg = "用户名或邮箱已注册";
                 } else {
-                    User user = new User();
-                    BeanUtils.copyProperties(addUser, user);
-                    Utils.entryptPassword(user);
-                    if (this.userService.add(user) > 0) {
-                        msg = "用户添加失败";
-                    } else {
+                    if (this.userService.add(addUser) > 0) {
                         log.info("^^^^^^^^^^^^^^^^^^^^用户添加成功  end");
-                        if (!StringUtil.isEmpty(addUser.getRoles())){
-                            String[] role_ids = addUser.getRoles().split(",");
-                            // 分配角色
-                            this.sysRoleService.addAll(user.getId(),role_ids);
-                        }
                         status = 0;
                         msg = "用户添加成功";
+                    } else {
+                        msg = "用户添加失败";
                     }
                 }
             }
@@ -89,7 +76,11 @@ public class UserController extends BaseController {
         return resultJson(status,msg);
     }
 
-    @ApiOperation (value = "用户列表")
+    /**
+     * User列表
+     * @return
+     */
+    @ApiOperation (value = "User列表")
     @GetMapping("/list")
     @RequiresRoles("admin")
     public ResultJson user_list(){
@@ -104,7 +95,12 @@ public class UserController extends BaseController {
         return resultJson(status,msg,userList);
     }
 
-    @ApiOperation(value = "用户详情")
+    /**
+     * User详情
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "User详情")
     @GetMapping("/detail/{id}")
     public ResultJson user_datail(@PathVariable("id") Integer id){
         Integer status = -1;
@@ -140,23 +136,16 @@ public class UserController extends BaseController {
                 if (!StringUtil.isEmpty(editUser.getNewpassword())) {//修改密码
                     if(editUser.getNewpassword().equals(editUser.getRenewpassword())) {
                         user.setPlainpassword(editUser.getNewpassword());
-                        Utils.entryptPassword(user);
+                        DassgUtil.entryptPassword(user);
                     }else {
-                        resultJson(status,"两次密码输入不一致");
+                        msg = "两次密码输入不一致";
                     }
-                } else {//不修改密码
+                }else {//不修改密码
                     User byId = this.userService.findById(user.getId());
                     user.setPassword(byId.getPassword());
                     user.setSalt(byId.getSalt());
                 }
-                if (this.userService.update(user) > 0) {
-                    if (!StringUtil.isEmpty(editUser.getRoles())){
-                        // 清空原角色
-                        this.sysRoleService.deleteByUserId(user.getId());
-                        String[] role_ids = editUser.getRoles().split(",");
-                        // 分配新角色
-                        this.sysRoleService.addAll(user.getId(),role_ids);
-                    }
+                if (this.userService.edit(editUser,user) > 0) {
                     status = 0;
                     msg = "修改成功";
                 } else {
@@ -180,7 +169,6 @@ public class UserController extends BaseController {
     public ResultJson user_update(UpdateUser updateUser){
         Integer status = -1;
         String msg = "";
-        Subject subject = SecurityUtils.getSubject();
         User sessionUser = (User) SecurityUtils.getSubject().getPrincipal();
         if(sessionUser != null) {
             try {
@@ -189,18 +177,18 @@ public class UserController extends BaseController {
                     if (byUsername != null) {
                         return resultJson(status, "邮箱已注册");
                     }
+                    if(!sessionUser.getPlainpassword().equals(updateUser.getPlainpassword())){ //判断输入原密码是否正确
+                        return resultJson(status,"原密码输入错误");
+                    }
                     User user = new User();
                     BeanUtils.copyProperties(updateUser, user);
                     user.setId(sessionUser.getId());
                     user.setUsername(sessionUser.getUsername());
                     user.setAvailable(sessionUser.getAvailable());
-                    if(!sessionUser.getPlainpassword().equals(user.getPlainpassword())){ //判断输入原密码是否正确
-                        return resultJson(status,"原密码输入错误");
-                    }
                     if (!StringUtil.isEmpty(updateUser.getNewpassword())) {//修改密码
                         if (updateUser.getNewpassword().equals(updateUser.getRenewpassword())) {
                             user.setPlainpassword(updateUser.getNewpassword());
-                            Utils.entryptPassword(user);
+                            DassgUtil.entryptPassword(user);
                         }else {
                             resultJson(status,"两次密码输入不一致");
                         }
@@ -223,7 +211,13 @@ public class UserController extends BaseController {
         return resultJson(status,msg);
     }
 
-    @ApiOperation (value = "用户启用/禁用")
+    /**
+     * User启用/禁用
+     * @param id
+     * @param available
+     * @return
+     */
+    @ApiOperation (value = "User启用/禁用")
     @PostMapping("/available")
     @RequiresRoles("admin")
     public ResultJson user_available(Integer id,Boolean available){
@@ -238,7 +232,11 @@ public class UserController extends BaseController {
         return resultJson(status,msg);
     }
 
-    @ApiOperation (value = "用户信息")
+    /**
+     * User信息
+     * @return
+     */
+    @ApiOperation (value = "User信息")
     @GetMapping("/info")
     public ResultJson user_info(){
         Integer status = -1;

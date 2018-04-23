@@ -24,6 +24,7 @@ public class SliceServiceImpl implements SliceService {
     @Autowired
     private SliceDao sliceDao;
 
+
     @Override
     public int findByDataSourceId(Integer datasource_id) {
         return this.sliceMapper.findByDataSourceId(datasource_id);
@@ -65,7 +66,7 @@ public class SliceServiceImpl implements SliceService {
     }
 
     @Override
-    public List query(String sql, String url, String type) throws Exception {
+    public List query(String sql,String url,String type) throws Exception {
         return this.sliceDao.query(sql,url,type);
     }
 

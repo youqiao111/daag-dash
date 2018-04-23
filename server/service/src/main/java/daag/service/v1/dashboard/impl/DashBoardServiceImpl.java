@@ -46,12 +46,8 @@ public class DashBoardServiceImpl implements DashBoardService {
     }
 
     @Override
-    public int deleteByDashId(Integer dashboard_id) {
-        return this.dashBoardMapper.deleteByDashId(dashboard_id);
-    }
-
-    @Override
     public int deleteById(Integer id) {
+        this.dashBoardMapper.deleteByDashId(id); // 清空Slice  DashBoard关联表数据
         return this.dashBoardMapper.deleteById(id);
     }
 

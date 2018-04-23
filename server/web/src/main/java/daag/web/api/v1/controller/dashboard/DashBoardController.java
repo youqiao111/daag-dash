@@ -12,8 +12,8 @@ import daag.service.v1.dashboard.DashBoardService;
 import daag.service.v1.slice.SliceService;
 import daag.web.api.v1.BaseController;
 import daag.web.api.v1.controller.dashboard.validator.DashBoardValidator;
-import daag.web.utils.StringUtil;
-import daag.web.utils.exception.DaagException;
+import daag.util.StringUtil;
+import daag.util.exception.DaagException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -161,6 +161,12 @@ public class DashBoardController extends BaseController {
         return resultJson(status,msg);
     }
 
+    /**
+     * DashBoard_setting修改
+     * @param id
+     * @param setting
+     * @return
+     */
     @ApiOperation(value = "DashBoard_setting修改")
     @PostMapping("/uodate")
     public ResultJson dashboard_update(Integer id,String setting){
@@ -217,7 +223,6 @@ public class DashBoardController extends BaseController {
     public ResultJson dashboard_delete(Integer id){
         Integer status = -1;
         String msg = "";
-        this.dashBoardService.deleteByDashId(id); // 清空Slice  DashBoard关联表数据
         if (this.dashBoardService.deleteById(id) > 0){
             status = 0;
             msg = "删除成功";

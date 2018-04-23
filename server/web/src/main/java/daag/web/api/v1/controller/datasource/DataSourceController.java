@@ -6,13 +6,12 @@ import daag.model.v1.datasource.Vo.AddDataSource;
 import daag.model.v1.datasource.Vo.DetailDataSource;
 import daag.model.v1.datasource.Vo.EditDataSource;
 import daag.model.v1.datasource.Vo.ListDataSource;
-import daag.model.v1.slice.Slice;
 import daag.model.v1.user.User;
 import daag.service.v1.datasource.DataSourceService;
 import daag.service.v1.slice.SliceService;
 import daag.web.api.v1.BaseController;
 import daag.web.api.v1.controller.datasource.validator.DataSourceValidator;
-import daag.web.utils.exception.DaagException;
+import daag.util.exception.DaagException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -160,6 +159,13 @@ public class DataSourceController extends BaseController {
         return resultJson(status,msg);
     }
 
+
+    /**
+     * DataSource连接测试
+     * @param url
+     * @param type
+     * @return
+     */
     @ApiOperation(value = "DataSource连接测试")
     @PostMapping("/test")
     public ResultJson datasource_test(String url,String type){

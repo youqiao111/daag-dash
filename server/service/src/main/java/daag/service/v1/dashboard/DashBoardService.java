@@ -22,8 +22,6 @@ public interface DashBoardService {
 
     List<PublicDashBoard> findPublic();
 
-    int deleteByDashId(Integer dashboard_id);
-
     int deleteById(Integer id);
 
     int edit(EditDashBoard editDashBoard);

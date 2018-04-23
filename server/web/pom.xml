@@ -22,6 +22,11 @@
             <artifactId>service</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>daag</groupId>
+            <artifactId>util</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
       <plugins>

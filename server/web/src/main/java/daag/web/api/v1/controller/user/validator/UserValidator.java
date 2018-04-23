@@ -3,9 +3,9 @@ package daag.web.api.v1.controller.user.validator;
 import daag.model.v1.user.Vo.AddUser;
 import daag.model.v1.user.Vo.EditUser;
 import daag.model.v1.user.Vo.UpdateUser;
-import daag.web.utils.StringUtil;
-import daag.web.utils.exception.CodeMsg;
-import daag.web.utils.exception.DaagException;
+import daag.util.StringUtil;
+import daag.util.exception.CodeMsg;
+import daag.util.exception.DaagException;
 
 /**
  * 用户参数验证

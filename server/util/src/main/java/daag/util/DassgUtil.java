@@ -1,4 +1,4 @@
-package daag.web.utils;
+package daag.util;
 
 import daag.model.v1.user.User;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -15,7 +15,7 @@ import java.util.UUID;
  * @author itdragon
  *
  */
-public class Utils {
+public class DassgUtil {
 	
 	private static final String ALGORITHM_NAME = "MD5";
 	private static final Integer HASH_ITERATIONS = 1024;
