@@ -17,11 +17,6 @@
             <artifactId>model</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>daag</groupId>
-            <artifactId>service</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
 </project>

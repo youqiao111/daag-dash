@@ -36,7 +36,7 @@ public class App {
     public EmbeddedServletContainerFactory createEmbeddedServletContainerFactory()
     {
         TomcatEmbeddedServletContainerFactory tomcatFactory = new TomcatEmbeddedServletContainerFactory();
-        tomcatFactory.setPort(6660);
+        tomcatFactory.setPort(8080);
         tomcatFactory.setSessionTimeout(30000);
         tomcatFactory.setUriEncoding(Charset.forName("UTF-8"));
         tomcatFactory.addConnectorCustomizers(new tomcatConfig());
